@@ -24,7 +24,7 @@ connection.connect(function(err) {
     connection.query("SELECT * FROM legos;", function(err, data) {
       if (err) throw err;
       res.render("index", { legos: data, title: "All my projects"});
-      console.log(data);
+     // console.log(data);
   
     }); //not sure about the details in the render line above
   });
@@ -44,52 +44,36 @@ connection.connect(function(err) {
     });
   });
 
-  app.post('/update/:id', (request, response) => {
+  app.post('/update/:id/:built', (request, response) => {
     let updateID = parseInt(request.params.id);
     if (isNaN(updateID)) {
       //Handle invalid IDs, we only want integers.  This shouldn't ever happen
       response.send("I really don't know how you accomplished this, but you have selected an invalid ID. Impressive, but it won't work ");
     }
+
     // toggle 'built' value here
-    
-    console.log('post request: '+ JSON.stringify(request.params));
-    bool = true;
-    
-    // toggle the 'built' value when this is called
+    //console.log('post request: '+ JSON.stringify(request.params));
+    var newBool = true;
+
+    if(request.params.built == 0){
+        newBool = true;
+    }else{
+        newBool = false;
+    };
+
     connection.query("UPDATE `legos` SET ? WHERE id = " + updateID,
-    {built: bool},
+    {built: newBool},
       (err, results) => {
         if (err) 
           throw err;
   
         response.redirect('/')
+    //console.log('response = '+ JSON.stringify(response));
+        
       }
     )
     //console.log('UPDATE ID: ' + updateID + ' to say: ' + !bool);
   });
-
-
-app.get('/delete/:id', (request, response) => {
-  let deleteID = parseInt(request.params.id);
-  if (isNaN(deleteID)) {
-    //Handle invalid IDs, we only want integers
-    response.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
-  }
-  // response.send('I am going to delete: ' + deleteID);
-  connection.query(
-    "DELETE FROM `legos` WHERE `id` = ?",
-    deleteID,
-    (err, results) => {
-        if (err) {
-          throw err;
-        }
-        console.log('Deleted ' + results.affectedRows);
-        response.redirect("/");
-  })
-});
-
-
-
 
 
 };     // end of function

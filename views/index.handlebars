@@ -18,11 +18,12 @@
       <ul>
       {{#each legos}}
        {{#unless this.built}}
-          <form action = "/update/{{this.id}}" method ="POST">
-          <li> <text id="txtbx-lf" value={{this.id}}>{{this.lego}}</text>
+       <li>
+          <form action = "/update/{{this.id}}/{{this.built}}" method ="POST">
+          <text id="txtbx-lf" value={{this.id}}>{{this.lego}}</text>
           <button type="submit" id="build" value={{this.id}}>Build</button>,
-          </li>
           </form>
+        </li>
         {{/unless}}
       {{/each}}
       </ul>
@@ -37,7 +38,7 @@
       {{#each legos}}
        {{#if this.built}}
         <li>
-          <form action = "/update/{{this.id}}" method ="POST">
+          <form action = "/update/{{this.id}}/{{this.built}}" method ="POST">
           <text id="txtbx-rt" value={{this.id}}>{{this.lego}}</text>       
           <button type="submit" id="break" value={{this.id}}>Disassemble</button>,
           </form>
