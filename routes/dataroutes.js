@@ -47,12 +47,17 @@ connection.connect(function(err) {
   app.post('/update/:id', (request, response) => {
     let updateID = parseInt(request.params.id);
     if (isNaN(updateID)) {
-      //Handle invalid IDs, we only want integers
-      response.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
+      //Handle invalid IDs, we only want integers.  This shouldn't ever happen
+      response.send("I really don't know how you accomplished this, but you have selected an invalid ID. Impressive, but it won't work ");
     }
     // toggle 'built' value here
+    
+    console.log('post request: '+ JSON.stringify(request.params));
+    bool = true;
+    
+    // toggle the 'built' value when this is called
     connection.query("UPDATE `legos` SET ? WHERE id = " + updateID,
-      {built: !request.body.built},
+    {built: bool},
       (err, results) => {
         if (err) 
           throw err;
@@ -60,21 +65,31 @@ connection.connect(function(err) {
         response.redirect('/')
       }
     )
-    console.log('UPDATE ID: ' + updateID + ' to say: ' + request.body.built);
+    //console.log('UPDATE ID: ' + updateID + ' to say: ' + !bool);
   });
-  
-// app.post('/update/:id', (request, response) => {
 
-//     let updateID = parseInt(request.params.id);
 
-//     //toggle the boolean value of 'built' parameter
-//     // the array index is one less than the id.
+app.get('/delete/:id', (request, response) => {
+  let deleteID = parseInt(request.params.id);
+  if (isNaN(deleteID)) {
+    //Handle invalid IDs, we only want integers
+    response.send("According to your request, you need to consult the manual reference for your server version as defined in package.json. Please consult this manual and try your request again. ERROR_INVALID_ID");
+  }
+  // response.send('I am going to delete: ' + deleteID);
+  connection.query(
+    "DELETE FROM `legos` WHERE `id` = ?",
+    deleteID,
+    (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log('Deleted ' + results.affectedRows);
+        response.redirect("/");
+  })
+});
 
-//     var bool = dataRender.data[updateID-1].built;
-//     dataRender.data[updateID-1].built = !bool;
 
-//     response.redirect('/')
 
-//   });
+
 
 };     // end of function
