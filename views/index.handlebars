@@ -3,7 +3,7 @@
     
   <br><br>
   <form action = "/" method ="POST">
-      <textarea type="text" id="inbox" name ="object" placeholder="New Project..." ></textarea>
+      <textarea type="text" id="inbox" name ="lego" placeholder="New Project..." ></textarea>
       <button type="submit" id = "new" >submit</button>
     </form>
 
@@ -16,10 +16,10 @@
       <h4>Projects to be built:</h4>
 
       <ul>
-      {{#each data}}
+      {{#each legos}}
        {{#unless this.built}}
           <form action = "/update/{{this.id}}" method ="POST">
-          <li> <text id="txtbx-lf" value={{this.id}}>{{this.object}}</text>
+          <li> <text id="txtbx-lf" value={{this.id}}>{{this.lego}}</text>
           <button type="submit" id="build" value={{this.id}}>Build</button>,
           </li>
           </form>
@@ -34,11 +34,11 @@
       <h4>Completed projects: </h4>
       
       <ul>
-      {{#each data }}
+      {{#each legos}}
        {{#if this.built}}
         <li>
           <form action = "/update/{{this.id}}" method ="POST">
-          <text id="txtbx-rt" value={{this.id}}>{{this.object}}</text>       
+          <text id="txtbx-rt" value={{this.id}}>{{this.lego}}</text>       
           <button type="submit" id="break" value={{this.id}}>Disassemble</button>,
           </form>
         </li>
