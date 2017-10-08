@@ -1,0 +1,60 @@
+<div class = "container">
+  <div class = "row">
+    
+  <br><br>
+  <form action = "/" method ="POST">
+      <textarea type="text" id="inbox" name ="object" placeholder="New Project..." ></textarea>
+      <button type="submit" id = "new" >submit</button>
+    </form>
+
+  </div>
+
+  <div  class = "row">
+    <div id = "col1" class = "col-6">
+      <!-- List all non-built lego objects entered -->
+ 
+      <h4>Projects to be built:</h4>
+
+      <ul>
+      {{#each data}}
+       {{#unless this.built}}
+          <form action = "/update/{{this.id}}" method ="POST">
+          <li> <text id="txtbx-lf" value={{this.id}}>{{this.object}}</text>
+          <button type="submit" id="build" value={{this.id}}>Build</button>,
+          </li>
+          </form>
+        {{/unless}}
+      {{/each}}
+      </ul>
+      
+    </div>  <!-- end of first column (left side) -->
+<br><br><br><br>
+    <div id ="col2" class = "col-6">
+
+      <h4>Completed projects: </h4>
+      
+      <ul>
+      {{#each data }}
+       {{#if this.built}}
+        <li>
+          <form action = "/update/{{this.id}}" method ="POST">
+          <text id="txtbx-rt" value={{this.id}}>{{this.object}}</text>       
+          <button type="submit" id="break" value={{this.id}}>Disassemble</button>,
+          </form>
+        </li>
+        {{/if}}
+      {{/each}}
+      </ul>
+    </div>
+   
+  </div>  <!--end of 'row' div that defines the body -->
+
+</div>    <!--end of container div -->
+
+   <script>
+
+      var currentUrl = window.location.origin;
+
+   
+
+    </script>
