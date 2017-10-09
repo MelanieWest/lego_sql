@@ -65,13 +65,6 @@ connection.connect(function(err) {
 
     console.log('boolean: '+bool+', not boolean: '+!bool);
 
-    // var newBool = true;
-    // if(request.params.built == 0){
-    //     newBool = true;
-    // }else{
-    //     newBool = false;
-    // };
-
     connection.query("UPDATE `legos` SET ? WHERE id = " + updateID,
     {built: !bool},
       (err, results) => {
@@ -90,7 +83,7 @@ connection.connect(function(err) {
     let deleteID = parseInt(request.params.id);
     if (isNaN(deleteID)) {
       //Handle invalid IDs, we only want integers
-      response.send("ERROR_INVALID_ID");
+      response.send("You are a hacker. You entered an invalid id, though that shouldn't be possible");
     }
 
     connection.query(
