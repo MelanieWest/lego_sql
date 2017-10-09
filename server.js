@@ -17,16 +17,9 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
 //set up the endpoints, "/",  "/update/:id"
 
 require("./routes/dataroutes")(app);
-
-
-
-
-//----------above was added from 7.4 #07 task saver ----------------- 
-
 
 
 app.listen(PORT, function() {
