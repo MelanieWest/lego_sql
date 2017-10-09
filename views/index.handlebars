@@ -38,6 +38,7 @@
       {{#each legos}}
        {{#if this.built}}
         <li>
+          <p> <a class="delete" href="/delete/{{this.id}}" style = "color:yellow">Donate this Toy</a></p> 
           <form action = "/update/{{this.id}}/{{this.built}}" method ="POST">
           <text id="txtbx-rt" value={{this.id}}>{{this.lego}}</text>       
           <button type="submit" id="break" value={{this.id}}>Disassemble</button>,

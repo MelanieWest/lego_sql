@@ -60,16 +60,20 @@ connection.connect(function(err) {
 
     // toggle 'built' value here
     //console.log('post request: '+ JSON.stringify(request.params));
-    var newBool = true;
+    
+    var bool = parseInt(request.params.built);
 
-    if(request.params.built == 0){
-        newBool = true;
-    }else{
-        newBool = false;
-    };
+    console.log('boolean: '+bool+', not boolean: '+!bool);
+
+    // var newBool = true;
+    // if(request.params.built == 0){
+    //     newBool = true;
+    // }else{
+    //     newBool = false;
+    // };
 
     connection.query("UPDATE `legos` SET ? WHERE id = " + updateID,
-    {built: newBool},
+    {built: !bool},
       (err, results) => {
         if (err) 
           throw err;
@@ -79,6 +83,26 @@ connection.connect(function(err) {
       }
     )
    
+  });
+
+
+  app.get('/delete/:id', (request, response) => {
+    let deleteID = parseInt(request.params.id);
+    if (isNaN(deleteID)) {
+      //Handle invalid IDs, we only want integers
+      response.send("ERROR_INVALID_ID");
+    }
+
+    connection.query(
+      "DELETE FROM `legos` WHERE `id` = ?",
+      deleteID,
+      (err, results) => {
+          if (err) {
+            throw err;
+          }
+    console.log('Deleted ' + results.affectedRows);
+    response.redirect("/");
+    })
   });
 
 
