@@ -13,7 +13,8 @@ module.exports = function(app){
       connection = mysql.createConnection({
       host: "localhost",
       user: "root",
-      password: "root",
+//      password: "root",
+      password: "",
       database: "legos_db"
     });
   }
@@ -57,8 +58,8 @@ connection.connect(function(err) {
       //Handle invalid IDs, we only want integers.  This shouldn't ever happen
       response.send("I really don't know how you accomplished this, but you have selected an invalid ID. Impressive, but it won't work ");
     }
-
-    // toggle 'built' value here
+    
+    //toggle 'built' value here
     //console.log('post request: '+ JSON.stringify(request.params));
     
     var bool = parseInt(request.params.built);
@@ -98,5 +99,23 @@ connection.connect(function(err) {
     })
   });
 
+
+  app.post('/change/:id', (request, response) => {
+    let updateID = parseInt(request.params.id);
+    if (isNaN(updateID)) {
+      //Handle invalid IDs, we only want integers
+      response.send("ERROR_INVALID_ID");
+    }
+    connection.query("UPDATE `legos` SET ? WHERE id = " + updateID,
+      {lego: request.body.lego},
+      (err, results) => {
+        if (err) 
+          throw err;
+  
+        response.redirect('/')
+      }
+    )
+    console.log('UPDATE ID: ' + updateID + ' to say: ' + request.body.task);
+  });
 
 };     // end of function

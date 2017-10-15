@@ -2,7 +2,7 @@
   <div class = "row">
     
   <br><br>
-  <form action = "/" method ="POST">
+    <form action = "/" method ="POST">
       <textarea type="text" id="inbox" name ="lego" placeholder="New Project..." ></textarea>
       <button type="submit" id = "new" >submit</button>
     </form>
@@ -20,9 +20,14 @@
        {{#unless this.built}}
        <li>
           <form action = "/update/{{this.id}}/{{this.built}}" method ="POST">
-          <text id="txtbx-lf" value={{this.id}}>{{this.lego}}</text>
-          <button type="submit" id="build" value={{this.id}}>Build</button>,
+            <text id="txtbx-lf" value={{this.id}}>{{this.lego}}</text>
+            <button type="submit" id="build" value={{this.id}}>Build</button>,
           </form>
+          <form action = "/change/{{this.id}}" method ="POST">
+            <textarea type="text" id="change" name ="lego" placeholder="Change this to ..." >{{this.lego}}</textarea>
+            <button type="submit" id = "chgbutton" >submit</button>
+          </form>
+        
         </li>
         {{/unless}}
       {{/each}}
@@ -40,8 +45,8 @@
         <li>
           <p> <a class="delete" href="/delete/{{this.id}}" style = "color:yellow">Donate this Toy</a></p> 
           <form action = "/update/{{this.id}}/{{this.built}}" method ="POST">
-          <text id="txtbx-rt" value={{this.id}}>{{this.lego}}</text>       
-          <button type="submit" id="break" value={{this.id}}>Disassemble</button>,
+            <text id="txtbx-rt" value={{this.id}}>{{this.lego}}</text>       
+            <button type="submit" id="break" value={{this.id}}>Disassemble</button>,
           </form>
         </li>
         {{/if}}
