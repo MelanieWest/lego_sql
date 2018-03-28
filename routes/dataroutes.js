@@ -101,6 +101,7 @@ connection.connect(function(err) {
 
 
   app.post('/change/:id', (request, response) => {
+    console.log(request);
     let updateID = parseInt(request.params.id);
     if (isNaN(updateID)) {
       //Handle invalid IDs, we only want integers
